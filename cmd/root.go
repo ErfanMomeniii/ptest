@@ -25,7 +25,6 @@ func init() {
 	)
 
 	rootCmd.AddCommand(runCmd)
-
 }
 
 func Execute() error {

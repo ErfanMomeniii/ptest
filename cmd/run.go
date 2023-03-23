@@ -20,6 +20,7 @@ func init() {
 		colorful.Printf(colorful.YellowColor, colorful.DefaultBackground, "%v  CTRL+C to gracefully stop \n", emoji.Warning)
 	})
 }
+
 func runFunc(_ *cobra.Command, _ []string) {
 	a := app.New(Url, Method, Header, Body, Count, Timeout)
 

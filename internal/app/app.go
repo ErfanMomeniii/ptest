@@ -38,19 +38,19 @@ func (a *App) Run() {
 		reports []Report
 	)
 
-	for i = 0; i < a.Config.PTest.Count; i++ {
+	for i = 0; i < a.Config.Count; i++ {
 		wg.Add(1)
 		go func() {
 			mu.Lock()
 			defer mu.Unlock()
 
 			s := time.Now()
-			requestBody := bytes.NewBuffer([]byte(a.Config.PTest.Body))
+			requestBody := bytes.NewBuffer([]byte(a.Config.Body))
 
-			client := http.Client{Timeout: a.Config.PTest.Timeout}
+			client := http.Client{Timeout: a.Config.Timeout}
 
-			req, _ := http.NewRequest(a.Config.PTest.Method, a.Config.PTest.Url, requestBody)
-			req.Header = util.GenerateHeader(a.Config.PTest.Header)
+			req, _ := http.NewRequest(a.Config.Method, a.Config.Url, requestBody)
+			req.Header = util.GenerateHeader(a.Config.Header)
 			resp, err := client.Do(req)
 
 			f := time.Now()

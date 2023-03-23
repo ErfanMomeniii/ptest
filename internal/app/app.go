@@ -22,7 +22,9 @@ type Report struct {
 
 func New(url string, method string, count int64, timeout int64) *App {
 	return &App{
-		Config: config.New(url, method, count, time.Duration(timeout)),
+		Config: config.New(
+			url, method, count, time.Duration(timeout),
+		),
 	}
 }
 

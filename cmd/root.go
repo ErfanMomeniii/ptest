@@ -7,6 +7,7 @@ import (
 var (
 	Url    string
 	Method string
+	Count  int64
 )
 
 // rootCmd represents the root command
@@ -22,6 +23,10 @@ func init() {
 
 	rootCmd.PersistentFlags().StringVarP(
 		&Method, "method", "m", "GET", "Http request method",
+	)
+
+	rootCmd.PersistentFlags().Int64VarP(
+		&Count, "count", "c", 1, "Count iterations",
 	)
 
 	rootCmd.AddCommand(runCmd)

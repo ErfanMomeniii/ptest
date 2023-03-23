@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/ErfanMomeniii/ptest/cmd"
+	"github.com/erfanmomeniii/ptest/cmd"
 	"os"
 )
 

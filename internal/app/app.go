@@ -7,13 +7,18 @@ import (
 	"github.com/enescakir/emoji"
 	"github.com/erfanmomeniii/ptest/internal/config"
 	"github.com/erfanmomeniii/ptest/internal/util"
+	"github.com/go-echarts/go-echarts/v2/charts"
+	"github.com/go-echarts/go-echarts/v2/opts"
+	"github.com/go-echarts/go-echarts/v2/types"
+	"math/rand"
 	"net/http"
 	"sync"
 	"time"
 )
 
 var (
-	Reports = make(chan Report)
+	Reports        = make(chan Report)
+	DiagramReports []time.Duration
 )
 
 type App struct {
@@ -21,15 +26,15 @@ type App struct {
 }
 
 type Report struct {
-	t              time.Duration
-	isSuccess      bool
-	responseStatus int
+	T              time.Duration
+	IsSuccess      bool
+	ResponseStatus int
 }
 
-func New(url string, method string, header []string, body string, count int64, timeout int64) *App {
+func New(url string, method string, header []string, body string, timeout int64, count int64, chart bool) *App {
 	return &App{
 		Config: config.New(
-			url, method, header, body, count, time.Duration(timeout),
+			url, method, header, body, time.Duration(timeout), count, chart,
 		),
 	}
 }
@@ -67,11 +72,11 @@ func (a *App) Run() {
 			}
 
 			report := Report{
-				t:              f.Sub(s),
-				isSuccess:      err == nil,
-				responseStatus: statusCode,
+				T:              f.Sub(s),
+				IsSuccess:      err == nil,
+				ResponseStatus: statusCode,
 			}
-
+			DiagramReports = append(DiagramReports, report.T)
 			reports <- report
 
 			w.Done()
@@ -79,6 +84,10 @@ func (a *App) Run() {
 	}
 
 	wg.Wait()
+
+	if a.Config.Diagram {
+		DrawChart(DiagramReports)
+	}
 
 	close(Reports)
 }
@@ -88,15 +97,16 @@ func PrintReports(reports <-chan Report, wg *sync.WaitGroup) {
 
 	for {
 		if r, ok := <-reports; ok {
-			if r.isSuccess {
+			if r.IsSuccess {
 				colorful.Printf(
 					colorful.GreenColor, colorful.DefaultBackground,
-					"%v Status Code %d %v Time Response : %v\n", emoji.CheckMark, r.responseStatus, emoji.Stopwatch, r.t,
+					"%v Status Code %d %v Response Time : %v\n", emoji.CheckMark,
+					r.ResponseStatus, emoji.Stopwatch, r.T,
 				)
 			} else {
 				colorful.Printf(
 					colorful.RedColor, colorful.DefaultBackground,
-					"%v Status Code %d\n", emoji.CrossMark, r.responseStatus,
+					"%v Status Code %d\n", emoji.CrossMark, r.ResponseStatus,
 				)
 			}
 
@@ -105,4 +115,53 @@ func PrintReports(reports <-chan Report, wg *sync.WaitGroup) {
 			break
 		}
 	}
+}
+func generateLineItems() []opts.LineData {
+	items := make([]opts.LineData, 0)
+	for i := 0; i < 7; i++ {
+		items = append(items, opts.LineData{Value: rand.Intn(300)})
+	}
+	return items
+}
+func DrawChart(reports []time.Duration) {
+	http.HandleFunc("/", func(w http.ResponseWriter, _ *http.Request) {
+		line := charts.NewLine()
+
+		line.SetGlobalOptions(
+			charts.WithInitializationOpts(
+				opts.Initialization{
+					Theme:           types.ThemeInfographic,
+					BackgroundColor: "#fff8cd",
+				},
+			),
+			charts.WithTitleOpts(
+				opts.Title{Title: "Reports Diagram"},
+			),
+			charts.WithYAxisOpts(
+				opts.YAxis{
+					Name: "Cost time(s)",
+					SplitLine: &opts.SplitLine{
+						Show: false,
+					},
+				},
+			),
+			charts.WithXAxisOpts(
+				opts.XAxis{Name: "Number"},
+			),
+		)
+
+		xAxis := util.GenerateXAxis(len(reports))
+
+		line.SetXAxis(xAxis).
+			AddSeries("reports", util.GenerateLineItems(DiagramReports))
+
+		line.Render(w)
+	})
+
+	colorful.Printf(
+		colorful.YellowColor, colorful.DefaultBackground,
+		"%v See diagram in 127.0.0.1:8081\n", emoji.BarChart,
+	)
+
+	http.ListenAndServe(":8081", nil)
 }

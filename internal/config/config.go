@@ -5,6 +5,7 @@ import "time"
 type Config struct {
 	Request RequestConfig
 	Count   int64
+	Diagram bool
 }
 
 type RequestConfig struct {
@@ -15,7 +16,7 @@ type RequestConfig struct {
 	Timeout time.Duration
 }
 
-func New(url string, method string, header []string, body string, count int64, timeout time.Duration) *Config {
+func New(url string, method string, header []string, body string, timeout time.Duration, count int64, Diagram bool) *Config {
 	return &Config{
 		Request: RequestConfig{
 			Url:     url,
@@ -24,6 +25,7 @@ func New(url string, method string, header []string, body string, count int64, t
 			Body:    body,
 			Timeout: timeout,
 		},
-		Count: count,
+		Count:   count,
+		Diagram: Diagram,
 	}
 }

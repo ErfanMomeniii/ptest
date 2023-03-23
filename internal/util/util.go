@@ -1,6 +1,11 @@
 package util
 
-import "strings"
+import (
+	"fmt"
+	"github.com/go-echarts/go-echarts/v2/opts"
+	"strings"
+	"time"
+)
 
 func GenerateHeader(headers []string) (hs map[string][]string) {
 	for _, header := range headers {
@@ -11,4 +16,21 @@ func GenerateHeader(headers []string) (hs map[string][]string) {
 	}
 
 	return hs
+}
+
+func GenerateXAxis(count int) (result []string) {
+	for i := 1; i <= count; i++ {
+		result = append(result, fmt.Sprintf("%d", i))
+	}
+
+	return result
+}
+
+func GenerateLineItems(reports []time.Duration) []opts.LineData {
+	items := make([]opts.LineData, 0)
+	for i := 0; i < len(reports); i++ {
+		items = append(items, opts.LineData{Value: reports[i].Seconds()})
+	}
+
+	return items
 }

@@ -22,7 +22,7 @@ func init() {
 }
 
 func runFunc(_ *cobra.Command, _ []string) {
-	a := app.New(Url, Method, Header, Body, Count, Timeout)
+	a := app.New(Url, Method, Header, Body, Timeout, Count, Diagram)
 
 	a.Run()
 }

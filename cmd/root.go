@@ -10,8 +10,9 @@ var (
 	Method  string
 	Header  []string
 	Body    string
-	Count   int64
 	Timeout int64
+	Count   int64
+	Diagram bool
 )
 
 // rootCmd represents the root command
@@ -47,6 +48,10 @@ func init() {
 
 	rootCmd.PersistentFlags().Int64VarP(
 		&Timeout, "timeout", "t", int64(time.Second*10), "Timeout for each HTTP call",
+	)
+
+	rootCmd.PersistentFlags().BoolVarP(
+		&Diagram, "diagram", "d", false, "Should draw diagram or not",
 	)
 
 	rootCmd.Flags().SortFlags = false

@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/erfanmomeniii/ptest/cmd"
+	_ "go.uber.org/automaxprocs"
 	"os"
 )
 

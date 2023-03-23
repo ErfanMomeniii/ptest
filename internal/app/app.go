@@ -4,8 +4,9 @@ import (
 	"bytes"
 	"fmt"
 	"github.com/ErfanMomeniii/colorful"
-	"github.com/ErfanMomeniii/ptest/internal/config"
 	"github.com/enescakir/emoji"
+	"github.com/erfanmomeniii/ptest/internal/config"
+	"github.com/erfanmomeniii/ptest/internal/util"
 	"net/http"
 	"sync"
 	"time"
@@ -21,10 +22,10 @@ type Report struct {
 	responseStatus int
 }
 
-func New(url string, method string, count int64, timeout int64) *App {
+func New(url string, method string, header []string, body string, count int64, timeout int64) *App {
 	return &App{
 		Config: config.New(
-			url, method, count, time.Duration(timeout),
+			url, method, header, body, count, time.Duration(timeout),
 		),
 	}
 }
@@ -44,13 +45,12 @@ func (a *App) Run() {
 			defer mu.Unlock()
 
 			s := time.Now()
-
-			requestBody := bytes.NewBuffer([]byte{})
+			requestBody := bytes.NewBuffer([]byte(a.Config.PTest.Body))
 
 			client := http.Client{Timeout: a.Config.PTest.Timeout}
 
 			req, _ := http.NewRequest(a.Config.PTest.Method, a.Config.PTest.Url, requestBody)
-
+			req.Header = util.GenerateHeader(a.Config.PTest.Header)
 			resp, err := client.Do(req)
 
 			f := time.Now()

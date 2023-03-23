@@ -1,4 +1,4 @@
-module github.com/ErfanMomeniii/ptest
+module github.com/erfanmomeniii/ptest
 
 go 1.19
 

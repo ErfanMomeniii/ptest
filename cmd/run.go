@@ -2,8 +2,8 @@ package cmd
 
 import (
 	"github.com/ErfanMomeniii/colorful"
-	"github.com/ErfanMomeniii/ptest/internal/app"
 	"github.com/enescakir/emoji"
+	"github.com/erfanmomeniii/ptest/internal/app"
 	"github.com/spf13/cobra"
 )
 
@@ -21,7 +21,7 @@ func init() {
 	})
 }
 func runFunc(_ *cobra.Command, _ []string) {
-	a := app.New(Url, Method, Count, Timeout)
+	a := app.New(Url, Method, Header, Body, Count, Timeout)
 
 	a.Run()
 }

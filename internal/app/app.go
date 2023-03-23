@@ -3,6 +3,8 @@ package app
 import (
 	"bytes"
 	"fmt"
+	"github.com/ErfanMomeniii/colorful"
+	"github.com/enescakir/emoji"
 	"net/http"
 	"time"
 )
@@ -39,15 +41,31 @@ func (a *App) Run() {
 
 	f := time.Now()
 
+	statusCode := 500
+	if resp != nil {
+		statusCode = resp.StatusCode
+	}
+
 	report := Report{
 		t:              f.Sub(s),
 		isSuccess:      err == nil,
-		responseStatus: resp.StatusCode,
+		responseStatus: statusCode,
 	}
 
 	report.Print()
 }
 
 func (r *Report) Print() {
-	fmt.Println("Report")
+	fmt.Println("------------------   Report   ------------------")
+	if r.isSuccess {
+		colorful.Printf(
+			colorful.GreenColor, colorful.DefaultBackground,
+			"%v Status Code %d %v Time Response : %v", emoji.CheckMark, r.responseStatus, emoji.Stopwatch, r.t,
+		)
+	} else {
+		colorful.Printf(
+			colorful.RedColor, colorful.DefaultBackground,
+			"%v Status Code %d", emoji.CrossMark, r.responseStatus,
+		)
+	}
 }

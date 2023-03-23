@@ -17,6 +17,7 @@ func init() {
 	cobra.OnInitialize(func() {
 		colorful.Printf(colorful.BlueColor, colorful.DefaultBackground, "%v  Running tool ... \n", emoji.PersonRunning)
 		colorful.Printf(colorful.BlueColor, colorful.DefaultBackground, "%v  Generating result ... \n", emoji.WritingHand)
+		colorful.Printf(colorful.YellowColor, colorful.DefaultBackground, "%v  CTRL+C to gracefully stop \n", emoji.Warning)
 	})
 }
 func runFunc(_ *cobra.Command, _ []string) {

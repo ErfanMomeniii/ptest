@@ -17,7 +17,7 @@ var rootCmd = &cobra.Command{
 
 func init() {
 	rootCmd.PersistentFlags().StringVarP(
-		&Url, "url", "u", "https://google.com", "Website url",
+		&Url, "url", "u", "https://google", "Website url",
 	)
 
 	rootCmd.PersistentFlags().StringVarP(

@@ -7,11 +7,12 @@
 <img src="https://img.shields.io/badge/license-MIT-magenta?style=for-the-badge&logo=none" alt="license" />
 <img src="https://img.shields.io/badge/Version-1.0.0-red?style=for-the-badge&logo=none" alt="version" />
 </p>
-a lightweight Http benchmarking tool for testing performance
 
 <p align="center">
 <img src="./assets/gif/ptest.gif" alt="ptest" />
 </p>
+
+<b>a lightweight Http benchmarking tool for testing performance</b>
 
 # Documentation
 

@@ -12,6 +12,10 @@ import (
 	"time"
 )
 
+var (
+	Reports = make(chan Report)
+)
+
 type App struct {
 	Config *config.Config
 }
@@ -32,15 +36,17 @@ func New(url string, method string, header []string, body string, count int64, t
 
 func (a *App) Run() {
 	var (
-		i       int64
-		mu      = new(sync.Mutex)
-		wg      = new(sync.WaitGroup)
-		reports []Report
+		i  int64
+		mu = new(sync.Mutex)
+		wg = new(sync.WaitGroup)
 	)
 
+	go PrintReports(Reports, wg)
+
 	for i = 0; i < a.Config.Count; i++ {
-		wg.Add(1)
-		go func() {
+		wg.Add(2)
+
+		go func(reports chan<- Report, w *sync.WaitGroup) {
 			mu.Lock()
 			defer mu.Unlock()
 
@@ -66,30 +72,37 @@ func (a *App) Run() {
 				responseStatus: statusCode,
 			}
 
-			reports = append(reports, report)
-			wg.Done()
-		}()
+			reports <- report
+
+			w.Done()
+		}(Reports, wg)
 	}
 
 	wg.Wait()
 
-	PrintReports(reports)
+	close(Reports)
 }
 
-func PrintReports(reports []Report) {
+func PrintReports(reports <-chan Report, wg *sync.WaitGroup) {
 	fmt.Println("------------------   Report   ------------------")
 
-	for _, r := range reports {
-		if r.isSuccess {
-			colorful.Printf(
-				colorful.GreenColor, colorful.DefaultBackground,
-				"%v Status Code %d %v Time Response : %v\n", emoji.CheckMark, r.responseStatus, emoji.Stopwatch, r.t,
-			)
+	for {
+		if r, ok := <-reports; ok {
+			if r.isSuccess {
+				colorful.Printf(
+					colorful.GreenColor, colorful.DefaultBackground,
+					"%v Status Code %d %v Time Response : %v\n", emoji.CheckMark, r.responseStatus, emoji.Stopwatch, r.t,
+				)
+			} else {
+				colorful.Printf(
+					colorful.RedColor, colorful.DefaultBackground,
+					"%v Status Code %d\n", emoji.CrossMark, r.responseStatus,
+				)
+			}
+
+			wg.Done()
 		} else {
-			colorful.Printf(
-				colorful.RedColor, colorful.DefaultBackground,
-				"%v Status Code %d\n", emoji.CrossMark, r.responseStatus,
-			)
+			break
 		}
 	}
 }

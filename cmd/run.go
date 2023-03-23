@@ -21,7 +21,7 @@ func init() {
 	})
 }
 func runFunc(_ *cobra.Command, _ []string) {
-	a := app.New(Url, Method)
+	a := app.New(Url, Method, Count, Timeout)
 
 	a.Run()
 }

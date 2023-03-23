@@ -4,15 +4,14 @@ import (
 	"bytes"
 	"fmt"
 	"github.com/ErfanMomeniii/colorful"
+	"github.com/ErfanMomeniii/ptest/internal/config"
 	"github.com/enescakir/emoji"
 	"net/http"
 	"time"
 )
 
 type App struct {
-	Url     string
-	Method  string
-	Timeout time.Duration
+	Config *config.Config
 }
 
 type Report struct {
@@ -21,51 +20,62 @@ type Report struct {
 	responseStatus int
 }
 
-func New(url string, method string) *App {
+func New(url string, method string, count int64, timeout int64) *App {
 	return &App{
-		Url:    url,
-		Method: method,
+		Config: config.New(url, method, count, time.Duration(timeout)),
 	}
 }
 
 func (a *App) Run() {
-	s := time.Now()
+	var (
+		i       int64
+		reports []Report
+	)
 
-	requestBody := bytes.NewBuffer([]byte{})
+	for i = 0; i < a.Config.PTest.Count; i++ {
+		s := time.Now()
 
-	client := http.Client{Timeout: a.Timeout}
+		requestBody := bytes.NewBuffer([]byte{})
 
-	req, _ := http.NewRequest(a.Method, a.Url, requestBody)
+		client := http.Client{Timeout: a.Config.PTest.Timeout}
 
-	resp, err := client.Do(req)
+		req, _ := http.NewRequest(a.Config.PTest.Method, a.Config.PTest.Url, requestBody)
 
-	f := time.Now()
+		resp, err := client.Do(req)
 
-	statusCode := 500
-	if resp != nil {
-		statusCode = resp.StatusCode
+		f := time.Now()
+
+		statusCode := 500
+		if resp != nil {
+			statusCode = resp.StatusCode
+		}
+
+		report := Report{
+			t:              f.Sub(s),
+			isSuccess:      err == nil,
+			responseStatus: statusCode,
+		}
+
+		reports = append(reports, report)
 	}
 
-	report := Report{
-		t:              f.Sub(s),
-		isSuccess:      err == nil,
-		responseStatus: statusCode,
-	}
-
-	report.Print()
+	PrintReports(reports)
 }
 
-func (r *Report) Print() {
+func PrintReports(reports []Report) {
 	fmt.Println("------------------   Report   ------------------")
-	if r.isSuccess {
-		colorful.Printf(
-			colorful.GreenColor, colorful.DefaultBackground,
-			"%v Status Code %d %v Time Response : %v", emoji.CheckMark, r.responseStatus, emoji.Stopwatch, r.t,
-		)
-	} else {
-		colorful.Printf(
-			colorful.RedColor, colorful.DefaultBackground,
-			"%v Status Code %d", emoji.CrossMark, r.responseStatus,
-		)
+
+	for _, r := range reports {
+		if r.isSuccess {
+			colorful.Printf(
+				colorful.GreenColor, colorful.DefaultBackground,
+				"%v Status Code %d %v Time Response : %v\n", emoji.CheckMark, r.responseStatus, emoji.Stopwatch, r.t,
+			)
+		} else {
+			colorful.Printf(
+				colorful.RedColor, colorful.DefaultBackground,
+				"%v Status Code %d\n", emoji.CrossMark, r.responseStatus,
+			)
+		}
 	}
 }

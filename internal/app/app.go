@@ -7,6 +7,7 @@ import (
 	"github.com/ErfanMomeniii/ptest/internal/config"
 	"github.com/enescakir/emoji"
 	"net/http"
+	"sync"
 	"time"
 )
 
@@ -31,35 +32,46 @@ func New(url string, method string, count int64, timeout int64) *App {
 func (a *App) Run() {
 	var (
 		i       int64
+		mu      = new(sync.Mutex)
+		wg      = new(sync.WaitGroup)
 		reports []Report
 	)
 
 	for i = 0; i < a.Config.PTest.Count; i++ {
-		s := time.Now()
+		wg.Add(1)
+		go func() {
+			mu.Lock()
+			defer mu.Unlock()
 
-		requestBody := bytes.NewBuffer([]byte{})
+			s := time.Now()
 
-		client := http.Client{Timeout: a.Config.PTest.Timeout}
+			requestBody := bytes.NewBuffer([]byte{})
 
-		req, _ := http.NewRequest(a.Config.PTest.Method, a.Config.PTest.Url, requestBody)
+			client := http.Client{Timeout: a.Config.PTest.Timeout}
 
-		resp, err := client.Do(req)
+			req, _ := http.NewRequest(a.Config.PTest.Method, a.Config.PTest.Url, requestBody)
 
-		f := time.Now()
+			resp, err := client.Do(req)
 
-		statusCode := 500
-		if resp != nil {
-			statusCode = resp.StatusCode
-		}
+			f := time.Now()
 
-		report := Report{
-			t:              f.Sub(s),
-			isSuccess:      err == nil,
-			responseStatus: statusCode,
-		}
+			statusCode := 500
+			if resp != nil {
+				statusCode = resp.StatusCode
+			}
 
-		reports = append(reports, report)
+			report := Report{
+				t:              f.Sub(s),
+				isSuccess:      err == nil,
+				responseStatus: statusCode,
+			}
+
+			reports = append(reports, report)
+			wg.Done()
+		}()
 	}
+
+	wg.Wait()
 
 	PrintReports(reports)
 }

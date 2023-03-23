@@ -40,7 +40,7 @@ here you can see an example of generated diagram from reports:
 ### CLI Usage
 
 ```bash
-ptest [Command] [FLAG]
+ptest [Command] [Flag]
 ```
 
 | Command | Description                  | 
@@ -48,12 +48,12 @@ ptest [Command] [FLAG]
 | help    | Help about any command       |
 | run     | Command for starting to run  |
 
-| Flag    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Description                                                                                | Type          | Default                 |
-|----------------------------------------------|--------------------------------------------------------------------------------------------|---------------|-------------------------|
-| `-u , --url`                                 | Target website URL.                                                                        | `string`      | https://google.com      |
-| `-c , --count`                               | Total iteration count                                                                      | `int`         | `1`                     |
-| `-d , --diagram`                             | For defining that should draw diagram or not                                               | `bool`        | `false`                 |
-| ` -b, --body`                                | Body for the HTTP request                                                                  | `string`      | `''`                    |
-| `-m, --method`                               | Http request method. Available methods  are *GET, POST, PUT, DELETE, HEAD, PATCH, OPTIONS* | `string`      | `GET`                   |
-| `-h, --header`                               | Headers of the request                                                                     | `stringArray` | `''`                    |
-| `-t, --timeout`                              | Timeout for each HTTP call                                                                 | `int`         | 10000000000(10 seconds) |
+| <div style="width:120px">Flag</div> | <div style="width:300px">Description</div>                                                 | Type          | Default                 |
+|-------------------------------------|--------------------------------------------------------------------------------------------|---------------|-------------------------|
+| `-u, --url`                         | Target website URL.                                                                        | `string`      | https://google.com      |
+| `-c, --count`                       | Total iteration count                                                                      | `int`         | `1`                     |
+| `-d, --diagram`                     | For defining that should draw diagram or not                                               | `bool`        | `false`                 |
+| `-b, --body`                        | Body for the HTTP request                                                                  | `string`      | `''`                    |
+| `-m, --method`                      | Http request method. Available methods  are *GET, POST, PUT, DELETE, HEAD, PATCH, OPTIONS* | `string`      | `GET`                   |
+| `-h, --header`                      | Headers of the request                                                                     | `stringArray` | `''`                    |
+| `-t, --timeout`                     | Timeout for each HTTP call                                                                 | `int`         | 10000000000(10 seconds) |

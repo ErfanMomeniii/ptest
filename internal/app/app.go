@@ -123,6 +123,7 @@ func generateLineItems() []opts.LineData {
 	}
 	return items
 }
+
 func DrawChart(reports []time.Duration) {
 	http.HandleFunc("/", func(w http.ResponseWriter, _ *http.Request) {
 		line := charts.NewLine()
@@ -160,7 +161,7 @@ func DrawChart(reports []time.Duration) {
 
 	colorful.Printf(
 		colorful.YellowColor, colorful.DefaultBackground,
-		"%v See diagram in 127.0.0.1:8081\n", emoji.BarChart,
+		"%v See diagram in 127.0.0.1:8081\n", emoji.ChartIncreasing,
 	)
 
 	http.ListenAndServe(":8081", nil)

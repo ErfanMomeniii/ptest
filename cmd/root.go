@@ -55,6 +55,7 @@ func init() {
 	)
 
 	rootCmd.Flags().SortFlags = false
+	rootCmd.CompletionOptions.DisableDefaultCmd = true
 
 	rootCmd.AddCommand(runCmd)
 }

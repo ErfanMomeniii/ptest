@@ -45,12 +45,12 @@ func (a *App) Run() {
 			defer mu.Unlock()
 
 			s := time.Now()
-			requestBody := bytes.NewBuffer([]byte(a.Config.Body))
+			requestBody := bytes.NewBuffer([]byte(a.Config.Request.Body))
 
-			client := http.Client{Timeout: a.Config.Timeout}
+			client := http.Client{Timeout: a.Config.Request.Timeout}
 
-			req, _ := http.NewRequest(a.Config.Method, a.Config.Url, requestBody)
-			req.Header = util.GenerateHeader(a.Config.Header)
+			req, _ := http.NewRequest(a.Config.Request.Method, a.Config.Request.Url, requestBody)
+			req.Header = util.GenerateHeader(a.Config.Request.Header)
 			resp, err := client.Do(req)
 
 			f := time.Now()

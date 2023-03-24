@@ -12,7 +12,7 @@
 <img src="./assets/gif/ptest.gif" alt="ptest" />
 </p>
 
-### <b>a lightweight Http benchmarking tool for testing performance</b>
+### <b>ptest is a lightweight Http benchmarking tool for testing performance.</b>
 
 # Documentation
 

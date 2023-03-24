@@ -12,7 +12,7 @@
 <img src="./assets/gif/ptest.gif" alt="ptest" />
 </p>
 
-<b>a lightweight Http benchmarking tool for testing performance</b>
+### <b>a lightweight Http benchmarking tool for testing performance</b>
 
 # Documentation
 
@@ -49,12 +49,12 @@ ptest [Command] [Flag]
 | help     | Help about any command        |
 | run      | Command for starting to run   |
 
-| Flag                | Description                                                                                 | Type           | Default                  |
-|:--------------------|:--------------------------------------------------------------------------------------------|:---------------|:-------------------------|
-| `-u, --url`         | Target website URL.                                                                         | `string`       | https://google.com       |
-| `-c, --count`       | Total iteration count                                                                       | `int`          | `1`                      |
-| `-d, --diagram`     | For defining that should draw diagram or not                                                | `bool`         | `false`                  |
-| `-b, --body`        | Body for the HTTP request                                                                   | `string`       | `''`                     |
-| `-m, --method`      | Http request method. Available methods  are *GET, POST, PUT, DELETE, HEAD, PATCH, OPTIONS*  | `string`       | `GET`                    |
-| `-h, --header`      | Headers of the request                                                                      | `stringArray`  | `''`                     |
-| `-t, --timeout`     | Timeout for each HTTP call                                                                  | `int`          | 10000000000(10 seconds)  |
+| Flag                               | Description                                                                                 | Type           | Default                  |
+|:-----------------------------------|:--------------------------------------------------------------------------------------------|:---------------|:-------------------------|
+| `-u, --url`                        | Target website URL.                                                                         | `string`       | https://google.com       |
+| `-c, --count`                      | Total iteration count                                                                       | `int`          | `1`                      |
+| `-d, --diagram`                    | For defining that should draw diagram or not                                                | `bool`         | `false`                  |
+| `-b, --body`                       | Body for the HTTP request                                                                   | `string`       | `''`                     |
+| `-m, --method`                     | Http request method. Available methods  are *GET, POST, PUT, DELETE, HEAD, PATCH, OPTIONS*  | `string`       | `GET`                    |
+| `-h, --header`                     | Headers of the request                                                                      | `stringArray`  | `''`                     |
+| `-t, --timeout`                    | Timeout for each HTTP call                                                                  | `int`          | 10000000000(10 seconds)  |

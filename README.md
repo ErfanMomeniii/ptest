@@ -44,17 +44,17 @@ here you can see an example of generated diagram from reports:
 ptest [Command] [Flag]
 ```
 
-| Command | Description                  | 
-|---------|------------------------------|
-| help    | Help about any command       |
-| run     | Command for starting to run  |
+| Command  | Description                   | 
+|:---------|:------------------------------|
+| help     | Help about any command        |
+| run      | Command for starting to run   |
 
-| <div style="width:200px">Flag</div> | <div style="width:300px">Description</div>                                                 | Type          | Default                 |
-|-------------------------------------|--------------------------------------------------------------------------------------------|---------------|-------------------------|
-| `-u, --url`                         | Target website URL.                                                                        | `string`      | https://google.com      |
-| `-c, --count`                       | Total iteration count                                                                      | `int`         | `1`                     |
-| `-d, --diagram`                     | For defining that should draw diagram or not                                               | `bool`        | `false`                 |
-| `-b, --body`                        | Body for the HTTP request                                                                  | `string`      | `''`                    |
-| `-m, --method`                      | Http request method. Available methods  are *GET, POST, PUT, DELETE, HEAD, PATCH, OPTIONS* | `string`      | `GET`                   |
-| `-h, --header`                      | Headers of the request                                                                     | `stringArray` | `''`                    |
-| `-t, --timeout`                     | Timeout for each HTTP call                                                                 | `int`         | 10000000000(10 seconds) |
+| Flag                | Description                                                                                 | Type           | Default                  |
+|:--------------------|:--------------------------------------------------------------------------------------------|:---------------|:-------------------------|
+| `-u, --url`         | Target website URL.                                                                         | `string`       | https://google.com       |
+| `-c, --count`       | Total iteration count                                                                       | `int`          | `1`                      |
+| `-d, --diagram`     | For defining that should draw diagram or not                                                | `bool`         | `false`                  |
+| `-b, --body`        | Body for the HTTP request                                                                   | `string`       | `''`                     |
+| `-m, --method`      | Http request method. Available methods  are *GET, POST, PUT, DELETE, HEAD, PATCH, OPTIONS*  | `string`       | `GET`                    |
+| `-h, --header`      | Headers of the request                                                                      | `stringArray`  | `''`                     |
+| `-t, --timeout`     | Timeout for each HTTP call                                                                  | `int`          | 10000000000(10 seconds)  |

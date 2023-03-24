@@ -49,7 +49,7 @@ ptest [Command] [Flag]
 | help     | Help about any command        |
 | run      | Command for starting to run   |
 
-| Flag                | Description                                                                                 | Type           | Default                  |
+| Flag             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  | Description                                                                                 | Type           | Default                  |
 |:--------------------|:--------------------------------------------------------------------------------------------|:---------------|:-------------------------|
 | `-u, --url`         | Target website URL.                                                                         | `string`       | https://google.com       |
 | `-c, --count`       | Total iteration count                                                                       | `int`          | `1`                      |

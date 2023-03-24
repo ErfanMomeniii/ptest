@@ -9,7 +9,7 @@ import (
 
 var runCmd = &cobra.Command{
 	Use:   "run",
-	Short: "Run tool",
+	Short: "Command for running tool",
 	Run:   runFunc,
 }
 

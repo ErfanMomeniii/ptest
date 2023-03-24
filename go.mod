@@ -7,6 +7,7 @@ require (
 	github.com/enescakir/emoji v1.0.0
 	github.com/go-echarts/go-echarts/v2 v2.2.5
 	github.com/spf13/cobra v1.6.1
+	go.uber.org/automaxprocs v1.5.2
 )
 
 require (

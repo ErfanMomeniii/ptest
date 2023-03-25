@@ -50,7 +50,7 @@ ptest [Command] [Flag]
 | run      | Command for starting to run   |
 
 
-| <br>Flag             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Description                                                                                | Type          | Default                 |
+| <br>Flag             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Description                                                                                | Type          | Default                 |
 |:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:-------------------------------------------------------------------------------------------|:--------------|:------------------------|
 | `-u, --url`                                                                                                                                                                    | Target website URL                                                                         | `string`      | https://google.com      |
 | `-c, --count`                                                                                                                                                                  | Total iteration count                                                                      | `int`         | `1`                     |
